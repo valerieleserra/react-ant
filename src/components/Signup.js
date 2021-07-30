@@ -5,16 +5,16 @@ import { Modal, Form, Input, Button } from 'antd'
 import { firebaseConfig } from '../fbconfig'
 
 
-function Login ({ setUser }){
+function Signup ({ setUser }){
     const history = useHistory()
     const handleCancel = () => {
         history.push('/')
     }
-    const handleLogin = ({ email , password }) => {
+    const handleSignup = ({ email , password }) => {
         if(!firebase.apps.length){
             firebase.initializeApp(firebaseConfig)
         }
-        firebase.auth().signInWithEmailAndPassword(email,password)
+        firebase.auth().createUserWithEmailAndPassword(email,password)
            .then(results => {
                setUser(results.user)
             history.push('/')
@@ -23,10 +23,10 @@ function Login ({ setUser }){
         
     }
     return ( 
-        <Modal title="Login" visible={true} onCancel={handleCancel} footer={null}>
+        <Modal title="Signup" visible={true} onCancel={handleCancel} footer={null}>
           <Form
-                name="login" labelCol={{ span: 8}} wrapperCol={{ span: 16}} 
-                onFinish={handleLogin}>
+                name="signup" labelCol={{ span: 8}} wrapperCol={{ span: 16}} 
+                onFinish={handleSignup}>
                     <Form.Item label="Email" name="email" 
                                rules={[ { required: true, message: 'Please enter your email'}]}>
                                {/* { type: 'email' , message: 'Please enter a valid email'} ]}> */}
@@ -44,4 +44,4 @@ function Login ({ setUser }){
     )
 }
 
-export default Login
+export default Signup
